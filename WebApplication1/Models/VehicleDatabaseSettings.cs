@@ -1,10 +1,10 @@
 namespace WebApplication1.Models;
 
-public class CarsDatabaseSettings
+public class VehicleDatabaseSettings
 {
     public string ConnectionString { get; set; } = null!;
 
     public string DatabaseName { get; set; } = null!;
 
-    public string CarsCollectionName { get; set; } = null!;
+    public string VehicleCollectionName { get; set; } = null!;
 }

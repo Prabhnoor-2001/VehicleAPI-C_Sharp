@@ -7,10 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 // configuring the database from appsettings
-builder.Services.Configure<CarsDatabaseSettings>(
+builder.Services.Configure<VehicleDatabaseSettings>(
     builder.Configuration.GetSection("CarsDatabase"));
 
 builder.Services.AddScoped<ICarMovingService, CarMovingService>(); // this is available everywhere in this project now
+builder.Services.AddScoped<IBikeMovingService, BikeMovingService>(); 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 

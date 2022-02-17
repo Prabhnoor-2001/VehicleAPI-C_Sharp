@@ -11,7 +11,7 @@ public class CarMovingService : ICarMovingService
     private readonly IMongoCollection<Vehicle> _carsCollection;
     
     public CarMovingService(
-        IOptions<CarsDatabaseSettings> carDatabaseSettings) // dont fully understand what is happening here
+        IOptions<VehicleDatabaseSettings> carDatabaseSettings) // dont fully understand what is happening here
     {
         var mongoClient = new MongoClient(
             carDatabaseSettings.Value.ConnectionString);
@@ -20,7 +20,7 @@ public class CarMovingService : ICarMovingService
             carDatabaseSettings.Value.DatabaseName);
 
         _carsCollection = mongoDatabase.GetCollection<Vehicle>(
-            carDatabaseSettings.Value.CarsCollectionName);
+            carDatabaseSettings.Value.VehicleCollectionName);
     }
 
 

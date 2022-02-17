@@ -10,25 +10,25 @@ using WebApplication1.Models.shipwreckExample;
 namespace WebApplication1.Controllers;
 
 [ApiController]
-[Route("car")]
-public class CarController : ControllerBase
+[Route("bike")]
+public class BikeController : ControllerBase
 {
-    private readonly ICarMovingService _CarService;
+    private readonly IBikeMovingService _BikeService;
     private readonly IMapper _mapper;
-    // private readonly ILogger<CarController> _logger;
+    // private readonly ILogger<BikeController> _logger;
 
-    public CarController(ICarMovingService carService,IMapper mapper)
+    public BikeController(IBikeMovingService bikeService,IMapper mapper)
     {
-        _CarService = carService;
+        _BikeService = bikeService;
         _mapper = mapper;
 
     }
 
-    [HttpGet(Name = "GetWeatherForecast1")]
+    [HttpGet]
     public async Task<List<VehicleContract>> Get() // use automapper here
     {
         
-        var listOfvehicles = await _CarService.GetAllAsync();
+        var listOfvehicles = await _BikeService.GetAllAsync();
         var result = _mapper.Map<List<Vehicle>, List<VehicleContract>>(listOfvehicles);
         return result;
 
@@ -39,7 +39,7 @@ public class CarController : ControllerBase
         [FromBody] Vehicle vehicle
     )
     {
-        await _CarService.AddAsync(vehicle);
+        await _BikeService.AddAsync(vehicle);
     }
     
     [HttpPut("{vehicleId}")]
@@ -48,12 +48,12 @@ public class CarController : ControllerBase
         Guid vehicleId
     )
     {
-        await _CarService.UpdateAsync(vehicleId,vehicle);
+        await _BikeService.UpdateAsync(vehicleId,vehicle);
     }
 
     [HttpDelete("{vehicleId}")]
     public async Task Delete(Guid vehicleId)
     {
-        await _CarService.DeleteAsync(vehicleId);
+        await _BikeService.DeleteAsync(vehicleId);
     }
 }

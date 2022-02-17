@@ -8,19 +8,19 @@ public class BikeMovingService: IBikeMovingService
 {
     
     
-    private readonly IMongoCollection<Vehicle> _carsCollection;
+    private readonly IMongoCollection<Vehicle> _bikesService;
     
     public BikeMovingService(
-        IOptions<CarsDatabaseSettings> carDatabaseSettings) // NEED TO CONFIGURE THIS LATER
+        IOptions<VehicleDatabaseSettings> bikeDatabaseSettings) // NEED TO CONFIGURE THIS LATER
     {
         var mongoClient = new MongoClient(
-            carDatabaseSettings.Value.ConnectionString);
+           bikeDatabaseSettings.Value.ConnectionString);
 
         var mongoDatabase = mongoClient.GetDatabase(
-            carDatabaseSettings.Value.DatabaseName);
+           bikeDatabaseSettings.Value.DatabaseName);
 
-        _carsCollection = mongoDatabase.GetCollection<Vehicle>(
-            carDatabaseSettings.Value.CarsCollectionName);
+        _bikesService = mongoDatabase.GetCollection<Vehicle>(
+           bikeDatabaseSettings.Value.VehicleCollectionName);
     }
     public void Move(IVehicle vehicle)
     {
@@ -29,34 +29,29 @@ public class BikeMovingService: IBikeMovingService
 
     public async Task AddAsync(Vehicle vehicle)
     {
-        await _carsCollection.InsertOneAsync(vehicle);
+        await _bikesService.InsertOneAsync(vehicle);
     }
 
     public async Task DeleteAsync(Guid vehicleId)
     {
-        await _carsCollection.DeleteOneAsync(x => x._id == vehicleId);
+        await _bikesService.DeleteOneAsync(x => x._id == vehicleId);
     }
 
     public async Task UpdateAsync( Guid vehicleId, Vehicle vehicle)
     {
-        await _carsCollection.ReplaceOneAsync(x => x._id == vehicle._id, vehicle);
+        await _bikesService.ReplaceOneAsync(x => x._id == vehicleId, vehicle);
     }
 
    
 
     public async Task<List<Vehicle>> GetAsync(Guid vehicleId) // map from vehicle to car in the controller 
     {
-         return await _carsCollection.Find(car => car._id == vehicleId).ToListAsync();
+         return await _bikesService.Find(car => car._id == vehicleId).ToListAsync();
     }
     
     public async Task<List<Vehicle>> GetAllAsync()
     {
-        return await _carsCollection.Find(bike => bike.Type == VehicleType.BIKE ).ToListAsync();
+        return await _bikesService.Find(bike => bike.Type == VehicleType.BIKE ).ToListAsync();
     }
-
-
-    public void UpdateBikePrice(Bike bike)
-    {
-        bike.Price = 453890;
-    }
+    
 }

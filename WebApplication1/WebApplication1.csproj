@@ -18,6 +18,7 @@
       <Compile Remove="Services\CarService.cs" />
       <Compile Remove="Services\BikeService.cs" />
       <Compile Remove="WeatherForecast.cs" />
+      <Compile Remove="Controllers\Bike.cs" />
     </ItemGroup>
 
 </Project>
